@@ -3,6 +3,8 @@ import type {
   ApiResponse,
   ContactFormData,
   DonationFormData,
+  DonationInitiateResult,
+  DonationVerifyResult,
   GalleryItem,
   ImpactStats,
 } from "./types";
@@ -53,17 +55,29 @@ export async function submitContactForm(
 }
 
 /**
- * Initiates a donation (Paystack or mock backend).
- * @param data - Donation form payload
+ * Starts a Paystack checkout for a one-time donation.
  */
-export async function submitDonation(
+export async function initiateDonation(
   data: DonationFormData
-): Promise<ApiResponse<{ reference: string }>> {
-  const response = await apiClient.post<ApiResponse<{ reference: string }>>(
-    "/donate",
+): Promise<DonationInitiateResult> {
+  const response = await apiClient.post<ApiResponse<DonationInitiateResult>>(
+    "/donations/initiate",
     data
   );
-  return response.data;
+  return response.data.data;
+}
+
+/**
+ * Confirms a Paystack payment by reference after redirect.
+ */
+export async function verifyDonation(
+  reference: string
+): Promise<DonationVerifyResult> {
+  const response = await apiClient.post<ApiResponse<DonationVerifyResult>>(
+    "/donations/verify",
+    { reference }
+  );
+  return response.data.data;
 }
 
 export { apiClient };

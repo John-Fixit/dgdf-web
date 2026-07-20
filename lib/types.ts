@@ -173,9 +173,29 @@ export interface ContactPageContent {
 }
 
 export interface DonationFormData {
-  amount: number;
-  name: string;
+  donorName: string;
   email: string;
+  amount: number;
+  isAnonymous?: boolean;
+  currency?: "NGN" | "USD";
+}
+
+export interface DonationInitiateResult {
+  reference: string;
+  authorizationUrl: string;
+  accessCode?: string;
+}
+
+export interface DonationVerifyResult {
+  donation: {
+    status: "pending" | "success" | "failed";
+    amount?: number;
+    currency?: string;
+    donorName?: string;
+    email?: string;
+    paystackRef?: string | null;
+    isAnonymous?: boolean;
+  };
 }
 
 export interface DonateImpactItem {

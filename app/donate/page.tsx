@@ -25,7 +25,11 @@ export function generateMetadata(): Metadata {
 /**
  * Donate page — hero, gift form with impact messaging, and transparency.
  */
-export default function DonatePage() {
+export default function DonatePage({
+  searchParams,
+}: {
+  searchParams: { status?: string; reference?: string; trxref?: string };
+}) {
   const jsonLd = getWebPageJsonLd({
     title: "Donate",
     description:
@@ -37,6 +41,7 @@ export default function DonatePage() {
     { name: "Donate", path: "/donate" },
   ]);
   const donateJsonLd = getDonateActionJsonLd();
+  const reference = searchParams.reference || searchParams.trxref;
 
   return (
     <>
@@ -53,7 +58,11 @@ export default function DonatePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(donateJsonLd) }}
       />
       <DonateHero content={donatePageContent} />
-      <DonationForm content={donatePageContent} />
+      <DonationForm
+        content={donatePageContent}
+        status={searchParams.status}
+        reference={reference}
+      />
       <DonateTransparency content={donatePageContent} />
     </>
   );
