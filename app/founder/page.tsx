@@ -5,23 +5,25 @@ import {
   FounderHero,
   FounderQuote,
 } from "@/components/sections/founder";
+import { getSiteContent, mapFounderContent } from "@/lib/cms";
 import {
   createPageMetadata,
   getBreadcrumbJsonLd,
   getWebPageJsonLd,
 } from "@/lib/metadata";
-import { founderPageContent } from "@/lib/mock-data";
 import { SITE_NAME } from "@/lib/constants";
 import { absoluteUrl } from "@/lib/utils";
 
-export function generateMetadata(): Metadata {
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getSiteContent();
+  const founder = mapFounderContent(content.founder);
   return createPageMetadata({
     title: "Our Founder",
-    description: `Meet ${founderPageContent.name}, ${founderPageContent.role} of ${SITE_NAME}—the vision behind a faith-driven mission of hope and dignity.`,
+    description: `Meet ${founder.name}, ${founder.role} of ${SITE_NAME}—the vision behind a faith-driven mission of hope and dignity.`,
     path: "/founder",
     keywords: [
       "foundation founder",
-      founderPageContent.name,
+      founder.name,
       "gospel leadership Nigeria",
     ],
   });
@@ -30,7 +32,10 @@ export function generateMetadata(): Metadata {
 /**
  * Founder profile page — portrait, biography, quote, and CTA.
  */
-export default function FounderPage() {
+export default async function FounderPage() {
+  const content = await getSiteContent();
+  const founder = mapFounderContent(content.founder);
+
   const {
     label,
     name,
@@ -47,7 +52,7 @@ export default function FounderPage() {
     ctaBody,
     ctaPrimary,
     ctaSecondary,
-  } = founderPageContent;
+  } = founder;
 
   const jsonLd = getWebPageJsonLd({
     title: "Our Founder",
@@ -107,7 +112,6 @@ export default function FounderPage() {
         body={ctaBody}
         primaryLabel={ctaPrimary}
         secondaryLabel={ctaSecondary}
-        secondaryHref="/about"
       />
     </>
   );

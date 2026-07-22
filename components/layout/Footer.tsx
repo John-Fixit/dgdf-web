@@ -1,10 +1,7 @@
 import Link from "next/link";
 import { Facebook, Instagram, Mail, MapPin, Phone, Twitter, Youtube } from "lucide-react";
-import {
-  CONTACT_INFO,
-  SITE_NAME,
-  SOCIAL_LINKS,
-} from "@/lib/constants";
+import { getSiteSettings } from "@/lib/cms";
+import { SOCIAL_LINKS } from "@/lib/constants";
 
 const socialIcons = {
   facebook: Facebook,
@@ -21,24 +18,36 @@ const QUICK_LINKS = [
 ] as const;
 
 /**
- * Site footer with quick links, contact details, and social icons.
+ * Site footer with quick links, contact details, and social icons from CMS settings.
  */
-export function Footer() {
+export async function Footer() {
+  const settings = await getSiteSettings();
   const year = new Date().getFullYear();
+
+  const socialLinks = (
+    [
+      { platform: "facebook" as const, href: settings.social.facebook, label: "Facebook" },
+      { platform: "instagram" as const, href: settings.social.instagram, label: "Instagram" },
+      { platform: "youtube" as const, href: settings.social.youtube, label: "YouTube" },
+      { platform: "twitter" as const, href: settings.social.twitter, label: "Twitter" },
+    ] as const
+  ).filter((link) => Boolean(link.href));
+
+  const links = socialLinks.length > 0 ? socialLinks : SOCIAL_LINKS;
 
   return (
     <footer className="border-t border-border/60 bg-muted">
       <div className="mx-auto grid max-w-7xl gap-12 px-4 py-20 sm:px-6 md:grid-cols-3 lg:px-8">
         <div>
           <p className="font-display text-2xl font-semibold tracking-tight text-primary">
-            {SITE_NAME}
+            {settings.organization.name}
           </p>
           <p className="mt-6 max-w-xs text-sm leading-relaxed text-muted-foreground">
-            A premium humanitarian foundation registered in Nigeria, committed
-            to high-impact interventions across Africa.
+            {settings.organization.tagline ||
+              "A premium humanitarian foundation registered in Nigeria, committed to high-impact interventions across Africa."}
           </p>
           <ul className="mt-6 flex gap-3">
-            {SOCIAL_LINKS.map((social) => {
+            {links.map((social) => {
               const Icon = socialIcons[social.platform];
               return (
                 <li key={social.platform}>
@@ -82,24 +91,24 @@ export function Footer() {
           <address className="mt-6 space-y-4 text-sm not-italic text-foreground/70">
             <p className="flex items-start gap-2">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
-              <span>{CONTACT_INFO.address}</span>
+              <span>{settings.contact.address}</span>
             </p>
             <p className="flex items-center gap-2">
               <Phone className="h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
               <a
-                href={`tel:${CONTACT_INFO.phone.replace(/[^\d+]/g, "")}`}
+                href={`tel:${settings.contact.phone.replace(/[^\d+]/g, "")}`}
                 className="transition-colors hover:text-primary"
               >
-                {CONTACT_INFO.phone}
+                {settings.contact.phone}
               </a>
             </p>
             <p className="flex items-center gap-2">
               <Mail className="h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
               <a
-                href={`mailto:${CONTACT_INFO.email}`}
+                href={`mailto:${settings.contact.email}`}
                 className="transition-colors hover:text-primary"
               >
-                {CONTACT_INFO.email}
+                {settings.contact.email}
               </a>
             </p>
           </address>
@@ -108,7 +117,7 @@ export function Footer() {
 
       <div className="border-t border-border">
         <p className="mx-auto max-w-7xl px-4 py-8 text-center text-xs text-foreground/50 sm:px-6 md:text-left lg:px-8">
-          © {year} {SITE_NAME}. All rights reserved.
+          © {year} {settings.organization.name}. All rights reserved.
         </p>
       </div>
     </footer>

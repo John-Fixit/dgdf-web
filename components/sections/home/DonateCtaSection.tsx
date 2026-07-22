@@ -1,10 +1,18 @@
 import Link from "next/link";
 import { AnimatedSection, Button } from "@/components/ui";
 
+interface DonateCtaSectionProps {
+  headline?: string;
+  body?: string;
+}
+
 /**
  * Navy donation call-to-action with dual partnership options.
  */
-export function DonateCtaSection() {
+export function DonateCtaSection({
+  headline = "Partner With Us in This Divine Mission",
+  body = "Your contribution directly funds surgical interventions, school fees, and clean water infrastructure. Be the delight someone is praying for today.",
+}: DonateCtaSectionProps) {
   return (
     <section
       className="relative overflow-hidden bg-primary py-20 text-primary-foreground sm:py-28"
@@ -20,13 +28,9 @@ export function DonateCtaSection() {
             id="donate-cta-heading"
             className="font-display text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl"
           >
-            Partner With Us in This Divine Mission
+            {headline}
           </h2>
-          <p className="mt-6 text-lg leading-relaxed text-white/75">
-            Your contribution directly funds surgical interventions, school
-            fees, and clean water infrastructure. Be the delight someone is
-            praying for today.
-          </p>
+          <p className="mt-6 text-lg leading-relaxed text-white/75">{body}</p>
           <div className="mt-12 flex flex-col justify-center gap-3 sm:flex-row">
             <Button asChild size="lg" variant="primary" className="w-full px-10 sm:w-auto">
               <Link href="/donate">One-Time Donation</Link>

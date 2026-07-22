@@ -44,7 +44,6 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Brand aliases retained for existing section markup
         surface: "hsl(var(--card))",
         dark: "hsl(var(--foreground))",
         sidebar: "hsl(var(--sidebar))",

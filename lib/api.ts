@@ -5,16 +5,15 @@ import type {
   DonationFormData,
   DonationInitiateResult,
   DonationVerifyResult,
-  GalleryItem,
-  ImpactStats,
 } from "./types";
 
 /**
- * Creates a configured Axios instance for the public API.
+ * Browser/client Axios instance for interactive mutations only.
+ * Content GETs belong in `lib/server-api.ts` (SSR + Next cache).
  */
 function createApiClient(): AxiosInstance {
   return axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000/api",
+    baseURL: process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5002",
     headers: {
       "Content-Type": "application/json",
     },
@@ -25,31 +24,19 @@ function createApiClient(): AxiosInstance {
 const apiClient = createApiClient();
 
 /**
- * Fetches gallery items from the API.
- */
-export async function fetchGalleryItems(): Promise<GalleryItem[]> {
-  const response = await apiClient.get<ApiResponse<GalleryItem[]>>("/gallery");
-  return response.data.data;
-}
-
-/**
- * Fetches impact statistics from the API.
- */
-export async function fetchImpactStats(): Promise<ImpactStats> {
-  const response = await apiClient.get<ApiResponse<ImpactStats>>("/stats");
-  return response.data.data;
-}
-
-/**
  * Submits a contact form message.
- * @param data - Contact form payload
  */
 export async function submitContactForm(
   data: ContactFormData
 ): Promise<ApiResponse<{ id: string }>> {
   const response = await apiClient.post<ApiResponse<{ id: string }>>(
-    "/contact",
-    data
+    "/messages",
+    {
+      name: data.name,
+      email: data.email,
+      inquiryType: data.inquiryType,
+      message: data.message,
+    }
   );
   return response.data;
 }

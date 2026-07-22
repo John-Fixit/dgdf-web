@@ -4,10 +4,20 @@ import { HeartHandshake } from "lucide-react";
 import { motion } from "framer-motion";
 import { SectionLabel } from "@/components/ui";
 
+interface GalleryHeroProps {
+  label?: string;
+  headline?: string;
+  body?: string;
+}
+
 /**
  * Typographic gallery hero — centered editorial intro.
  */
-export function GalleryHero() {
+export function GalleryHero({
+  label = "Our Visual Narrative",
+  headline = "Capturing the Heart of Every Outreach",
+  body = "A documentary-style journey through the communities we serve. These are the faces of hope, the hands of change, and the spirit of a community united in faith and service.",
+}: GalleryHeroProps) {
   return (
     <section
       className="bg-background px-4 pb-12 pt-28 text-center sm:px-6 sm:pb-16 sm:pt-32 lg:px-8"
@@ -19,7 +29,7 @@ export function GalleryHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
         >
-          <SectionLabel className="mb-4">Our Visual Narrative</SectionLabel>
+          <SectionLabel className="mb-4">{label}</SectionLabel>
         </motion.div>
 
         <motion.h1
@@ -29,7 +39,7 @@ export function GalleryHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.12 }}
         >
-          Capturing the Heart of Every Outreach
+          {headline}
         </motion.h1>
 
         <motion.p
@@ -38,9 +48,7 @@ export function GalleryHero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.35 }}
         >
-          A documentary-style journey through the communities we serve. These are
-          the faces of hope, the hands of change, and the spirit of a community
-          united in faith and service.
+          {body}
         </motion.p>
 
         <motion.div

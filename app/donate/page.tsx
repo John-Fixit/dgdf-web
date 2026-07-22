@@ -4,6 +4,7 @@ import {
   DonationForm,
   DonateTransparency,
 } from "@/components/sections/donate";
+import { getSiteContent } from "@/lib/cms";
 import {
   createPageMetadata,
   getBreadcrumbJsonLd,
@@ -12,10 +13,12 @@ import {
 } from "@/lib/metadata";
 import { donatePageContent } from "@/lib/mock-data";
 
-export function generateMetadata(): Metadata {
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getSiteContent();
   return createPageMetadata({
     title: "Donate",
     description:
+      content.donate.hero.subtext ||
       "Support Divine Gospel Delight Foundation. Your gift fuels gospel outreaches, compassion care, and empowerment programs that change lives.",
     path: "/donate",
     keywords: ["donate", "give", "support ministry", "charity donation"],
@@ -25,15 +28,23 @@ export function generateMetadata(): Metadata {
 /**
  * Donate page — hero, gift form with impact messaging, and transparency.
  */
-export default function DonatePage({
+export default async function DonatePage({
   searchParams,
 }: {
   searchParams: { status?: string; reference?: string; trxref?: string };
 }) {
+  const content = await getSiteContent();
+  // CMS stores a single headline; keep accent empty so the full line renders cleanly.
+  const merged = {
+    ...donatePageContent,
+    heroHeadline: content.donate.hero.headline,
+    heroAccent: "",
+    heroBody: content.donate.hero.subtext,
+  };
+
   const jsonLd = getWebPageJsonLd({
     title: "Donate",
-    description:
-      "Support Divine Gospel Delight Foundation with a gift that fuels outreach and care.",
+    description: content.donate.hero.subtext,
     path: "/donate",
   });
   const breadcrumbJsonLd = getBreadcrumbJsonLd([
@@ -57,13 +68,13 @@ export default function DonatePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(donateJsonLd) }}
       />
-      <DonateHero content={donatePageContent} />
+      <DonateHero content={merged} />
       <DonationForm
-        content={donatePageContent}
+        content={merged}
         status={searchParams.status}
         reference={reference}
       />
-      <DonateTransparency content={donatePageContent} />
+      <DonateTransparency content={merged} />
     </>
   );
 }

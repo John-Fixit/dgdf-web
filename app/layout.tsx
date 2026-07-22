@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Manrope, Outfit } from "next/font/google";
 import { Footer, Navbar } from "@/components/layout";
-import { PageTransition } from "@/components/ui";
+import { AppToaster, PageTransition } from "@/components/ui";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_TAGLINE } from "@/lib/constants";
+import { getSiteSettings } from "@/lib/cms";
 import { getOrganizationJsonLd, getWebsiteJsonLd } from "@/lib/metadata";
 import { absoluteUrl } from "@/lib/utils";
 import "@/styles/globals.css";
@@ -103,14 +104,16 @@ export const metadata: Metadata = {
 
 /**
  * Root layout with fonts, navigation, footer, and Organization JSON-LD.
+ * Settings are loaded on the server so structured data is present in the HTML.
  */
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const organizationJsonLd = getOrganizationJsonLd();
-  const websiteJsonLd = getWebsiteJsonLd();
+  const settings = await getSiteSettings();
+  const organizationJsonLd = getOrganizationJsonLd(settings);
+  const websiteJsonLd = getWebsiteJsonLd(settings);
 
   return (
     <html lang="en" className={`${display.variable} ${sans.variable}`}>
@@ -132,6 +135,7 @@ export default function RootLayout({
           <main id="main-content">{children}</main>
         </PageTransition>
         <Footer />
+        <AppToaster />
       </body>
     </html>
   );

@@ -7,17 +7,20 @@ import {
   LeadershipSection,
   MissionVisionSection,
 } from "@/components/sections/about";
+import { getLeadership, getSiteContent } from "@/lib/cms";
 import {
   createPageMetadata,
   getBreadcrumbJsonLd,
   getWebPageJsonLd,
 } from "@/lib/metadata";
-import { aboutPageContent, leadership } from "@/lib/mock-data";
+import { aboutPageContent } from "@/lib/mock-data";
 
-export function generateMetadata(): Metadata {
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getSiteContent();
   return createPageMetadata({
     title: "About Us",
     description:
+      content.about.hero.subtext ||
       "Discover the story, mandate, vision, and leadership of Divine Gospel Delight Foundation—a faith-driven nonprofit reaching communities with gospel hope.",
     path: "/about",
     keywords: ["about foundation", "ministry leadership", "gospel mandate"],
@@ -27,11 +30,15 @@ export function generateMetadata(): Metadata {
 /**
  * About page with heritage hero, mission, journey, leadership, and CTA.
  */
-export default function AboutPage() {
+export default async function AboutPage() {
+  const [content, leaders] = await Promise.all([
+    getSiteContent(),
+    getLeadership(),
+  ]);
+
   const jsonLd = getWebPageJsonLd({
     title: "About Us",
-    description:
-      "Discover the story, mandate, vision, and leadership of Divine Gospel Delight Foundation.",
+    description: content.about.hero.subtext,
     path: "/about",
   });
   const breadcrumbJsonLd = getBreadcrumbJsonLd([
@@ -41,23 +48,12 @@ export default function AboutPage() {
 
   const {
     label,
-    headline,
     headlineAccent,
-    headlineSuffix,
     pillarsLabel,
     pillars,
-    intro,
     metrics,
-    missionTitle,
-    missionBody,
-    visionTitle,
-    visionBody,
-    quote,
     journeyLabel,
-    journeyHeadline,
     timeline,
-    leadershipLabel,
-    leadershipHeadline,
     ctaHeadline,
     ctaBody,
     ctaPrimary,
@@ -77,31 +73,31 @@ export default function AboutPage() {
       <AboutHero
         content={{
           label,
-          headline,
+          headline: content.about.hero.headline,
           headlineAccent,
-          headlineSuffix,
+          headlineSuffix: "",
           pillarsLabel,
           pillars,
-          intro,
+          intro: content.about.hero.subtext,
         }}
         metrics={metrics}
       />
       <MissionVisionSection
-        missionTitle={missionTitle}
-        missionBody={missionBody}
-        visionTitle={visionTitle}
-        visionBody={visionBody}
+        missionTitle={content.about.story.title}
+        missionBody={content.about.story.body}
+        visionTitle={aboutPageContent.visionTitle}
+        visionBody={aboutPageContent.visionBody}
       />
-      <AboutQuote quote={quote} />
+      <AboutQuote quote={content.about.mandateQuote.quote} />
       <HistoryTimeline
         label={journeyLabel}
-        headline={journeyHeadline}
+        headline={content.about.story.title}
         milestones={timeline}
       />
       <LeadershipSection
-        label={leadershipLabel}
-        headline={leadershipHeadline}
-        leaders={leadership}
+        label={content.about.leadership.subtext}
+        headline={content.about.leadership.heading}
+        leaders={leaders}
       />
       <AboutCtaSection
         headline={ctaHeadline}

@@ -1,6 +1,8 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { toast } from "sonner";
+import { submitContactForm } from "@/lib/api";
 import type { ContactFormData } from "@/lib/types";
 
 function createInitialForm(inquiryType: string): ContactFormData {
@@ -15,21 +17,14 @@ function createInitialForm(inquiryType: string): ContactFormData {
 export interface UseContactFormReturn {
   form: ContactFormData;
   isSubmitting: boolean;
-  isSuccess: boolean;
   error: string | null;
-  handleChange: (
-    field: keyof ContactFormData
-  ) => (
-    event: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => void;
+  setField: (field: keyof ContactFormData, value: string) => void;
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
   reset: () => void;
 }
 
 /**
- * Manages contact form state, validation, and mock submission.
+ * Manages contact form state, validation, and API submission.
  */
 export function useContactForm(
   defaultInquiryType = "General Inquiry"
@@ -38,27 +33,19 @@ export function useContactForm(
     createInitialForm(defaultInquiryType)
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleChange = useCallback(
-    (field: keyof ContactFormData) =>
-      (
-        event: React.ChangeEvent<
-          HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-        >
-      ) => {
-        setForm((prev) => ({ ...prev, [field]: event.target.value }));
-        setError(null);
-        setIsSuccess(false);
-      },
+  const setField = useCallback(
+    (field: keyof ContactFormData, value: string) => {
+      setForm((prev) => ({ ...prev, [field]: value }));
+      setError(null);
+    },
     []
   );
 
   const reset = useCallback(() => {
     setForm(createInitialForm(defaultInquiryType));
     setIsSubmitting(false);
-    setIsSuccess(false);
     setError(null);
   }, [defaultInquiryType]);
 
@@ -66,7 +53,6 @@ export function useContactForm(
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       setError(null);
-      setIsSuccess(false);
 
       if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
         setError("Please fill in your name, email, and message.");
@@ -76,10 +62,12 @@ export function useContactForm(
       setIsSubmitting(true);
 
       try {
-        // Mock submission until the backend contact endpoint is available.
-        await new Promise((resolve) => setTimeout(resolve, 900));
-        setIsSuccess(true);
+        await submitContactForm(form);
         setForm(createInitialForm(defaultInquiryType));
+        toast.success("Message sent", {
+          description:
+            "Thank you! Your message has been sent. We will be in touch soon.",
+        });
       } catch {
         setError("Something went wrong. Please try again shortly.");
       } finally {
@@ -92,9 +80,8 @@ export function useContactForm(
   return {
     form,
     isSubmitting,
-    isSuccess,
     error,
-    handleChange,
+    setField,
     handleSubmit,
     reset,
   };

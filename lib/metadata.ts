@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { SiteSettings } from "./cms-types";
 import {
   CONTACT_INFO,
   DEFAULT_OG_IMAGE,
@@ -101,29 +102,49 @@ export function createPageMetadata({
 
 /**
  * Returns JSON-LD NonprofitOrganization schema for the root layout.
+ * Pass CMS settings when available so crawlers see live contact/social data.
  */
-export function getOrganizationJsonLd(): Record<string, unknown> {
+export function getOrganizationJsonLd(
+  settings?: SiteSettings
+): Record<string, unknown> {
+  const name = settings?.organization.name || SITE_NAME;
+  const tagline = settings?.organization.tagline || SITE_TAGLINE;
+  const email = settings?.contact.email || CONTACT_INFO.email;
+  const phone = settings?.contact.phone || CONTACT_INFO.phone;
+  const address = settings?.contact.address || CONTACT_INFO.address;
+  const sameAs = settings
+    ? [
+        settings.social.facebook,
+        settings.social.instagram,
+        settings.social.youtube,
+        settings.social.twitter,
+      ].filter(Boolean)
+    : SOCIAL_LINKS.map((link) => link.href);
+  const logoUrl = settings?.organization.logoUrl
+    ? settings.organization.logoUrl
+    : absoluteUrl("/images/logo-512.png");
+
   return {
     "@context": "https://schema.org",
     "@type": ["Organization", "NGO"],
-    name: SITE_NAME,
-    legalName: SITE_NAME,
+    name,
+    legalName: name,
     alternateName: ["DGD Foundation", "Divine Gospel Delight"],
     url: absoluteUrl("/"),
-    description: `${SITE_NAME} reaches communities with the gospel, compassion care, and empowerment programs that change lives across Nigeria.`,
-    slogan: SITE_TAGLINE,
+    description: `${name} reaches communities with the gospel, compassion care, and empowerment programs that change lives across Nigeria.`,
+    slogan: tagline,
     logo: {
       "@type": "ImageObject",
-      url: absoluteUrl("/images/logo-512.png"),
+      url: logoUrl,
       width: 512,
       height: 341,
     },
     image: absoluteUrl(DEFAULT_OG_IMAGE),
-    email: CONTACT_INFO.email,
-    telephone: CONTACT_INFO.phone,
+    email,
+    telephone: phone,
     address: {
       "@type": "PostalAddress",
-      streetAddress: CONTACT_INFO.address,
+      streetAddress: address,
       addressLocality: "Lagos",
       addressRegion: "Lagos",
       addressCountry: "NG",
@@ -136,13 +157,13 @@ export function getOrganizationJsonLd(): Record<string, unknown> {
       "@type": "Place",
       name: "Lagos, Nigeria",
     },
-    sameAs: SOCIAL_LINKS.map((link) => link.href),
+    sameAs,
     contactPoint: [
       {
         "@type": "ContactPoint",
         contactType: "customer support",
-        email: CONTACT_INFO.email,
-        telephone: CONTACT_INFO.phone,
+        email,
+        telephone: phone,
         availableLanguage: ["English"],
         areaServed: "NG",
       },
@@ -153,18 +174,21 @@ export function getOrganizationJsonLd(): Record<string, unknown> {
 /**
  * Returns JSON-LD WebSite schema (helps sitelinks / brand identity).
  */
-export function getWebsiteJsonLd(): Record<string, unknown> {
+export function getWebsiteJsonLd(settings?: SiteSettings): Record<string, unknown> {
+  const name = settings?.organization.name || SITE_NAME;
+  const tagline = settings?.organization.tagline || SITE_TAGLINE;
+
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: SITE_NAME,
+    name,
     alternateName: "DGD Foundation",
     url: absoluteUrl("/"),
-    description: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    description: `${name} — ${tagline}`,
     inLanguage: "en-NG",
     publisher: {
       "@type": "Organization",
-      name: SITE_NAME,
+      name,
       url: absoluteUrl("/"),
     },
   };
