@@ -171,6 +171,10 @@ export function LeadershipSection({
                     className="absolute left-2.5 top-0 h-[2.5px] w-14 bg-accent"
                     aria-hidden="true"
                   />
+                  <div
+                    className="absolute right-2.5 bottom-0 h-[2.5px] w-14 bg-accent"
+                    aria-hidden="true"
+                  />
 
                   <p className="relative max-w-[320px] text-sm leading-relaxed text-foreground/70">
                     {leader.bio}
