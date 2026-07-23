@@ -69,7 +69,7 @@ export function DonationForm({
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [resultState, setResultState] = useState<DonationResultState | null>(
-    null
+    null,
   );
   const [verifiedDonation, setVerifiedDonation] =
     useState<VerifiedDonationSummary | null>(null);
@@ -149,10 +149,10 @@ export function DonationForm({
 
     if (isCustom && !customAmount.trim()) {
       next.amount = "Amount is required.";
-    } else if (selectedAmount < 1000) {
+    } else if (selectedAmount < 100) {
       next.amount =
         selectedAmount > 0
-          ? "Minimum donation is ₦1,000."
+          ? "Minimum donation is ₦100."
           : "Amount is required.";
     }
 
@@ -201,7 +201,7 @@ export function DonationForm({
         ? (err.response?.data as { message?: string } | undefined)?.message
         : null;
       setSubmitError(
-        message || "Unable to start payment right now. Please try again."
+        message || "Unable to start payment right now. Please try again.",
       );
       setIsSubmitting(false);
     }
@@ -267,7 +267,7 @@ export function DonationForm({
                             "rounded-xl py-4 text-sm font-semibold transition-all",
                             !isCustom && amount === value
                               ? "border-2 border-accent bg-accent/10 text-primary shadow-glow"
-                              : "border border-border text-primary hover:border-accent hover:bg-accent/5"
+                              : "border border-border text-primary hover:border-accent hover:bg-accent/5",
                           )}
                         >
                           {formatCurrency(value)}
@@ -275,53 +275,77 @@ export function DonationForm({
                       ))}
                     </div>
 
-                    <div className="mt-5 space-y-2">
-                      <Label htmlFor="custom-amount">
-                        Or enter your own amount
-                      </Label>
-                      <div className="relative">
-                        <span
-                          className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-muted-foreground"
-                          aria-hidden="true"
-                        >
-                          ₦
-                        </span>
-                        <Input
-                          id="custom-amount"
-                          type="number"
-                          min={1000}
-                          step={100}
-                          value={customAmount}
-                          onFocus={() => setIsCustom(true)}
+                    <div className="mt-5 space-y-3">
+                      <div className="flex items-center gap-3">
+                        <input
+                          id="add-custom-amount"
+                          type="checkbox"
+                          checked={isCustom}
                           onChange={(event) => {
-                            setIsCustom(true);
-                            setCustomAmount(event.target.value);
-                            clearFieldError("amount");
+                            const checked = event.target.checked;
+                            setIsCustom(checked);
+                            if (!checked) {
+                              setCustomAmount("");
+                              clearFieldError("amount");
+                            }
                           }}
-                          className={cn(
-                            "pl-9",
-                            isCustom &&
-                              !fieldErrors.amount &&
-                              "border-accent ring-2 ring-accent/20 focus-visible:ring-accent/30",
-                            fieldErrors.amount &&
-                              "border-destructive focus-visible:ring-destructive/30"
-                          )}
-                          placeholder="e.g. 15000"
-                          aria-invalid={Boolean(fieldErrors.amount)}
-                          aria-describedby={
-                            fieldErrors.amount ? "custom-amount-error" : undefined
-                          }
-                          aria-label="Custom donation amount in Naira"
+                          className="h-4 w-4 rounded border-border text-primary focus:ring-accent"
                         />
-                      </div>
-                      {fieldErrors.amount ? (
-                        <p
-                          id="custom-amount-error"
-                          className="text-xs text-destructive"
-                          role="alert"
+                        <Label
+                          htmlFor="add-custom-amount"
+                          className="font-normal text-muted-foreground"
                         >
-                          {fieldErrors.amount}
-                        </p>
+                          Add custom amount
+                        </Label>
+                      </div>
+
+                      {isCustom ? (
+                        <div className="space-y-2">
+                          <Label htmlFor="custom-amount">Your amount</Label>
+                          <div className="relative">
+                            <span
+                              className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-muted-foreground"
+                              aria-hidden="true"
+                            >
+                              ₦
+                            </span>
+                            <Input
+                              id="custom-amount"
+                              type="number"
+                              min={1000}
+                              step={100}
+                              value={customAmount}
+                              onChange={(event) => {
+                                setCustomAmount(event.target.value);
+                                clearFieldError("amount");
+                              }}
+                              className={cn(
+                                "pl-9",
+                                !fieldErrors.amount &&
+                                  "border-accent ring-2 ring-accent/20 focus-visible:ring-accent/30",
+                                fieldErrors.amount &&
+                                  "border-destructive focus-visible:ring-destructive/30",
+                              )}
+                              placeholder="e.g. 15000"
+                              aria-invalid={Boolean(fieldErrors.amount)}
+                              aria-describedby={
+                                fieldErrors.amount
+                                  ? "custom-amount-error"
+                                  : undefined
+                              }
+                              aria-label="Custom donation amount in Naira"
+                            />
+                          </div>
+                          {fieldErrors.amount ? (
+                            <p
+                              id="custom-amount-error"
+                              className="text-xs text-destructive"
+                              role="alert"
+                            >
+                              {fieldErrors.amount}
+                            </p>
+                          ) : null}
+                        </div>
                       ) : null}
                     </div>
                   </fieldset>
@@ -348,7 +372,7 @@ export function DonationForm({
                         }
                         className={cn(
                           fieldErrors.firstName &&
-                            "border-destructive focus-visible:ring-destructive/30"
+                            "border-destructive focus-visible:ring-destructive/30",
                         )}
                       />
                       {fieldErrors.firstName ? (
@@ -382,7 +406,7 @@ export function DonationForm({
                         }
                         className={cn(
                           fieldErrors.lastName &&
-                            "border-destructive focus-visible:ring-destructive/30"
+                            "border-destructive focus-visible:ring-destructive/30",
                         )}
                       />
                       {fieldErrors.lastName ? (
@@ -416,7 +440,7 @@ export function DonationForm({
                       }
                       className={cn(
                         fieldErrors.email &&
-                          "border-destructive focus-visible:ring-destructive/30"
+                          "border-destructive focus-visible:ring-destructive/30",
                       )}
                     />
                     {fieldErrors.email ? (
