@@ -56,17 +56,19 @@ export function ProgramsSection({ programs }: ProgramsSectionProps) {
                     />
                   </div>
                   <CardContent className="p-7 sm:p-8">
-                    <SectionLabel className="mb-3">{program.category}</SectionLabel>
+                    <SectionLabel className="mb-3">
+                      {program.category}
+                    </SectionLabel>
                     <h3 className="font-display text-2xl font-semibold leading-tight tracking-tight text-primary">
                       {program.title}
                     </h3>
                     <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                       {program.description}
                     </p>
-                    <span className="mt-6 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary transition-transform duration-300 group-hover:translate-x-1.5">
+                    {/* <span className="mt-6 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary transition-transform duration-300 group-hover:translate-x-1.5">
                       Read More
                       <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                    </span>
+                    </span> */}
                   </CardContent>
                 </Link>
               </Card>

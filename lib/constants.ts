@@ -90,7 +90,7 @@ export const PROGRAMS: Program[] = [
     description:
       "Advancing people’s health through outreach and care that restores dignity to vulnerable families across Nigeria.",
     imageUrl:
-      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=600&fit=crop",
+      "https://res.cloudinary.com/john-fixit/image/upload/v1785015206/dgdf/gallery/szqfhvxrxxsmrf83wmjt.png",
     href: "/about",
   },
   {
