@@ -76,10 +76,10 @@ export function HeroSection({
             variant="secondary"
             className="px-8 shadow-lift"
           >
-            <Link href="/donate">Donate Now</Link>
+            <Link href="/founder">Meet the Founder</Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="px-8">
-            <Link href="/about">About Us</Link>
+            <Link href="/about">Our Story</Link>
           </Button>
         </motion.div>
       </div>

@@ -19,9 +19,9 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Donate",
     description:
       content.donate.hero.subtext ||
-      "Support Divine Gospel Delight Foundation. Your gift fuels gospel outreaches, compassion care, and empowerment programs that change lives.",
+      "Support Divine Gospel Delight Foundation. Your gift helps restore hope and dignity for widows, orphans, retirees, and families across Nigeria.",
     path: "/donate",
-    keywords: ["donate", "give", "support ministry", "charity donation"],
+    keywords: ["donate", "give", "support foundation", "humanitarian giving"],
   });
 }
 

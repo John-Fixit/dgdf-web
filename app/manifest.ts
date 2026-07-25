@@ -8,7 +8,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: SITE_NAME,
     short_name: "DGD Foundation",
-    description: `${SITE_NAME} — ${SITE_TAGLINE}. Gospel outreach, compassion care, and community empowerment across Nigeria.`,
+    description: `${SITE_NAME} — ${SITE_TAGLINE}. Meeting the needs of the less privileged through humanitarian and empowerment support across Nigeria.`,
     start_url: "/",
     display: "standalone",
     background_color: "#FAF9F7",
@@ -29,7 +29,7 @@ export default function manifest(): MetadataRoute.Manifest {
         purpose: "any",
       },
       {
-        src: "/apple-icon.png",
+        src: "/apple-touch-icon.png",
         sizes: "180x180",
         type: "image/png",
       },

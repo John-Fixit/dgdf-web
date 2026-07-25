@@ -1,7 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Facebook, Instagram, Mail, MapPin, Phone, Twitter, Youtube } from "lucide-react";
 import { getSiteSettings } from "@/lib/cms";
-import { SOCIAL_LINKS } from "@/lib/constants";
+import { SITE_NAME, SITE_TAGLINE, SOCIAL_LINKS } from "@/lib/constants";
 
 const socialIcons = {
   facebook: Facebook,
@@ -12,8 +13,9 @@ const socialIcons = {
 
 const QUICK_LINKS = [
   { href: "/about", label: "About Our Mission" },
+  { href: "/founder", label: "Meet Our Leaders" },
   { href: "/gallery", label: "Our Outreach Gallery" },
-  { href: "/donate", label: "Impact Reports" },
+  { href: "/donate", label: "Give With Purpose" },
   { href: "/contact", label: "Contact Us" },
 ] as const;
 
@@ -22,7 +24,13 @@ const QUICK_LINKS = [
  */
 export async function Footer() {
   const settings = await getSiteSettings();
-  const year = new Date().getFullYear();
+  const orgName = settings.organization.name || SITE_NAME;
+  const tagline =
+    settings.organization.tagline || SITE_TAGLINE;
+  const phoneLines = settings.contact.phone
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
 
   const socialLinks = (
     [
@@ -39,12 +47,17 @@ export async function Footer() {
     <footer className="border-t border-border/60 bg-muted">
       <div className="mx-auto grid max-w-7xl gap-12 px-4 py-20 sm:px-6 md:grid-cols-3 lg:px-8">
         <div>
-          <p className="font-display text-2xl font-semibold tracking-tight text-primary">
-            {settings.organization.name}
-          </p>
+          <Link href="/" className="inline-block">
+            <Image
+              src="/logo.png"
+              alt={orgName}
+              width={1536}
+              height={1024}
+              className="h-16 w-auto object-contain sm:h-[4.5rem]"
+            />
+          </Link>
           <p className="mt-6 max-w-xs text-sm leading-relaxed text-muted-foreground">
-            {settings.organization.tagline ||
-              "A premium humanitarian foundation registered in Nigeria, committed to high-impact interventions across Africa."}
+            {tagline}
           </p>
           <ul className="mt-6 flex gap-3">
             {links.map((social) => {
@@ -93,15 +106,20 @@ export async function Footer() {
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
               <span>{settings.contact.address}</span>
             </p>
-            <p className="flex items-center gap-2">
-              <Phone className="h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
-              <a
-                href={`tel:${settings.contact.phone.replace(/[^\d+]/g, "")}`}
-                className="transition-colors hover:text-primary"
-              >
-                {settings.contact.phone}
-              </a>
-            </p>
+            <div className="flex items-start gap-2">
+              <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+              <div className="space-y-1">
+                {phoneLines.map((phone) => (
+                  <a
+                    key={phone}
+                    href={`tel:${phone.replace(/[^\d+]/g, "")}`}
+                    className="block transition-colors hover:text-primary"
+                  >
+                    {phone}
+                  </a>
+                ))}
+              </div>
+            </div>
             <p className="flex items-center gap-2">
               <Mail className="h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
               <a
@@ -117,7 +135,7 @@ export async function Footer() {
 
       <div className="border-t border-border">
         <p className="mx-auto max-w-7xl px-4 py-8 text-center text-xs text-foreground/50 sm:px-6 md:text-left lg:px-8">
-          © {year} {settings.organization.name}. All rights reserved.
+          © 2026 {orgName}. All rights reserved.
         </p>
       </div>
     </footer>

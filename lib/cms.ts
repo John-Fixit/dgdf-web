@@ -61,19 +61,19 @@ export async function getSiteContent(): Promise<SiteContentDocument> {
         },
         impactStats: mockImpactStats,
         donateCta: {
-          headline: "Your Generosity Fuels Transformation",
+          headline: "Sow Into Hope and Dignity",
           subtext:
-            "Join partners across Nigeria in restoring hope through education, health, and community outreach.",
+            "Your gift helps us fulfill our divine mandate — meeting needs, empowering families, and restoring hope across Nigerian communities.",
         },
       },
       about: {
         hero: {
-          headline: `${aboutPageContent.headline} ${aboutPageContent.headlineAccent} ${aboutPageContent.headlineSuffix}`,
+          headline: `${aboutPageContent.headline} ${aboutPageContent.headlineAccent} ${aboutPageContent.headlineSuffix}`.trim(),
           subtext: aboutPageContent.intro,
         },
         story: {
           title: aboutPageContent.journeyHeadline,
-          body: aboutPageContent.intro,
+          body: foundationContent.aboutText,
         },
         mandateQuote: { quote: aboutPageContent.quote },
         leadership: {
@@ -107,9 +107,9 @@ export async function getSiteContent(): Promise<SiteContentDocument> {
       },
       gallery: {
         hero: {
-          label: "Our Visual Narrative",
-          headline: "Capturing the Heart of Every Outreach",
-          body: "A documentary-style journey through the communities we serve.",
+          label: "Our Gallery",
+          headline: "Capturing Every Act of Service",
+          body: "Moments from our outreach among widows, orphans, families, and neighbors — where compassion meets dignity and the Gospel is lived out in service.",
         },
         testimonial: {
           quote: galleryTestimonial.quote,
@@ -119,9 +119,9 @@ export async function getSiteContent(): Promise<SiteContentDocument> {
         },
         cta: {
           headline: "Be Part of the Next Chapter",
-          body: "Your support allows us to continue documenting stories of transformation.",
+          body: "Your support helps us continue serving communities and capturing stories of hope across Nigeria.",
           primaryLabel: "Donate Now",
-          secondaryLabel: "Join as Volunteer",
+          secondaryLabel: "Contact Us",
         },
       },
       donate: {
@@ -134,9 +134,10 @@ export async function getSiteContent(): Promise<SiteContentDocument> {
           outreaches: mockImpactStats.outreaches,
         },
         testimonial: {
-          quote: galleryTestimonial.quote,
-          donorName: galleryTestimonial.name,
-          donorRole: galleryTestimonial.role,
+          quote:
+            "Giving through this foundation feels like planting hope. You can see compassion and dignity in the way they serve.",
+          donorName: "A Faithful Partner",
+          donorRole: "Monthly Supporter",
         },
       },
       contact: {
@@ -159,6 +160,7 @@ export async function getSiteContent(): Promise<SiteContentDocument> {
             SOCIAL_LINKS.find((l) => l.platform === "youtube")?.href ?? "",
         },
       },
+
       lastUpdatedAt: new Date().toISOString(),
     };
   }
@@ -210,7 +212,7 @@ export async function getLeadership(): Promise<LeadershipMember[]> {
       role: member.role,
       bio: member.bio,
       photo: member.photo,
-      href: member.isFounder ? "/founder" : member.href,
+      href: "/founder",
     }));
   } catch (err) {
     console.warn("[cms] Falling back to mock leadership:", err);

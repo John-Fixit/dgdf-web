@@ -73,11 +73,12 @@ export const fetchLeadershipMembers = cache(
       role: member.role,
       bio: member.bio,
       photo: member.photoUrl,
-      href: member.isFounder ? "/founder" : member.href,
+      href: "/founder",
       isFounder: member.isFounder,
     }));
   }
 );
+
 
 /**
  * Fetches global site settings (request-deduped).

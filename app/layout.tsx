@@ -23,7 +23,7 @@ const sans = Manrope({
 });
 
 const siteDescription =
-  "Divine Gospel Delight Foundation reaches communities with the gospel, compassion care, and empowerment programs that change lives across Nigeria.";
+  "Divine Gospel Delight Foundation restores hope and dignity by meeting the needs of the less privileged through humanitarian and empowerment support across Nigeria.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(

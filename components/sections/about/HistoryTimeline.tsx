@@ -4,6 +4,8 @@ import type { TimelineMilestone } from "@/lib/types";
 export interface HistoryTimelineProps {
   label: string;
   headline: string;
+  /** Full foundation story shown above the journey milestones. */
+  body?: string;
   milestones: TimelineMilestone[];
 }
 
@@ -13,6 +15,7 @@ export interface HistoryTimelineProps {
 export function HistoryTimeline({
   label,
   headline,
+  body,
   milestones,
 }: HistoryTimelineProps) {
   return (
@@ -29,6 +32,11 @@ export function HistoryTimeline({
           >
             {headline}
           </h2>
+          {body ? (
+            <p className="mt-6 max-w-3xl text-base leading-relaxed text-muted-foreground sm:text-lg sm:leading-loose">
+              {body}
+            </p>
+          ) : null}
         </AnimatedSection>
 
         <div className="relative">

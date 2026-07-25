@@ -2,10 +2,14 @@ import type { Metadata } from "next";
 import { AboutCtaSection } from "@/components/sections/about";
 import {
   FounderArticle,
-  FounderHero,
+  FounderLeaders,
   FounderQuote,
 } from "@/components/sections/founder";
-import { getSiteContent, mapFounderContent } from "@/lib/cms";
+import {
+  getLeadership,
+  getSiteContent,
+  mapFounderContent,
+} from "@/lib/cms";
 import {
   createPageMetadata,
   getBreadcrumbJsonLd,
@@ -18,30 +22,33 @@ export async function generateMetadata(): Promise<Metadata> {
   const content = await getSiteContent();
   const founder = mapFounderContent(content.founder);
   return createPageMetadata({
-    title: "Our Founder",
-    description: `Meet ${founder.name}, ${founder.role} of ${SITE_NAME}—the vision behind a faith-driven mission of hope and dignity.`,
+    title: "Meet Our Leaders",
+    description:
+      founder.intro ||
+      `Meet the President and Secretary of ${SITE_NAME} — guiding a faith-driven mission to restore hope and dignity across Nigeria.`,
     path: "/founder",
     keywords: [
-      "foundation founder",
-      founder.name,
+      "foundation leadership",
+      "Rev'd Mrs Folake Ojo",
+      "Bolanle Ojo",
       "gospel leadership Nigeria",
     ],
   });
 }
 
 /**
- * Founder profile page — portrait, biography, quote, and CTA.
+ * Meet Our Leaders — President & Secretary profiles, story, quote, and CTA.
+ * Leader photos and bios are managed in Admin → Leadership.
  */
 export default async function FounderPage() {
-  const content = await getSiteContent();
+  const [content, leaders] = await Promise.all([
+    getSiteContent(),
+    getLeadership(),
+  ]);
   const founder = mapFounderContent(content.founder);
 
   const {
     label,
-    name,
-    role,
-    photo,
-    photoAlt,
     intro,
     articleLabel,
     articleHeadline,
@@ -54,29 +61,38 @@ export default async function FounderPage() {
     ctaSecondary,
   } = founder;
 
+  const featuredLeaders = leaders.slice(0, 2);
+
   const jsonLd = getWebPageJsonLd({
-    title: "Our Founder",
-    description: `Meet ${name}, ${role} of ${SITE_NAME}.`,
+    title: "Meet Our Leaders",
+    description: `Meet the President and Secretary of ${SITE_NAME}.`,
     path: "/founder",
   });
   const breadcrumbJsonLd = getBreadcrumbJsonLd([
     { name: "Home", path: "/" },
     { name: "About Us", path: "/about" },
-    { name: "Our Founder", path: "/founder" },
+    { name: "Meet Our Leaders", path: "/founder" },
   ]);
-  const personJsonLd = {
+  const peopleJsonLd = {
     "@context": "https://schema.org",
-    "@type": "Person",
-    name,
-    jobTitle: role,
-    image: photo,
-    description: intro,
-    worksFor: {
-      "@type": "NGO",
-      name: SITE_NAME,
-      url: absoluteUrl("/"),
-    },
-    url: absoluteUrl("/founder"),
+    "@type": "ItemList",
+    itemListElement: featuredLeaders.map((leader, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "Person",
+        name: leader.name,
+        jobTitle: leader.role,
+        image: leader.photo,
+        description: leader.bio,
+        worksFor: {
+          "@type": "NGO",
+          name: SITE_NAME,
+          url: absoluteUrl("/"),
+        },
+        url: absoluteUrl("/founder"),
+      },
+    })),
   };
 
   return (
@@ -91,15 +107,13 @@ export default async function FounderPage() {
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(peopleJsonLd) }}
       />
-      <FounderHero
+      <FounderLeaders
         label={label}
-        name={name}
-        role={role}
-        photo={photo}
-        photoAlt={photoAlt}
+        headline="Meet Our Leaders"
         intro={intro}
+        leaders={featuredLeaders}
       />
       <FounderArticle
         label={articleLabel}

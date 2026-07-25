@@ -122,7 +122,7 @@ export function getOrganizationJsonLd(
     : SOCIAL_LINKS.map((link) => link.href);
   const logoUrl = settings?.organization.logoUrl
     ? settings.organization.logoUrl
-    : absoluteUrl("/images/logo-512.png");
+    : absoluteUrl("/logo.png");
 
   return {
     "@context": "https://schema.org",
@@ -136,8 +136,8 @@ export function getOrganizationJsonLd(
     logo: {
       "@type": "ImageObject",
       url: logoUrl,
-      width: 512,
-      height: 341,
+      width: 1536,
+      height: 1024,
     },
     image: absoluteUrl(DEFAULT_OG_IMAGE),
     email,

@@ -10,8 +10,8 @@ interface DonateCtaSectionProps {
  * Navy donation call-to-action with dual partnership options.
  */
 export function DonateCtaSection({
-  headline = "Partner With Us in This Divine Mission",
-  body = "Your contribution directly funds surgical interventions, school fees, and clean water infrastructure. Be the delight someone is praying for today.",
+  headline = "Sow Into Hope and Dignity",
+  body = "Your gift helps us fulfill our divine mandate — meeting needs, empowering families, and restoring hope across Nigerian communities.",
 }: DonateCtaSectionProps) {
   return (
     <section

@@ -188,7 +188,7 @@ export function LeadershipSection({
                       className="group/link -ml-2 h-auto px-2 py-1.5 text-accent hover:bg-transparent hover:text-primary"
                     >
                       <Link href={leader.href}>
-                        Meet the Founder
+                        Meet Our Leaders
                         <ArrowRight
                           className="ml-1.5 h-4 w-4 transition-transform group-hover/link:translate-x-0.5"
                           aria-hidden="true"

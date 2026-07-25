@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
@@ -54,7 +55,7 @@ export function Navbar() {
           aria-label="Primary"
           initial={false}
           animate={{
-            height: scrolled ? 64 : 72,
+            height: scrolled ? 72 : 80,
             backgroundColor: scrolled
               ? "hsla(0, 0%, 100%, 0.92)"
               : "hsla(0, 0%, 100%, 0.72)",
@@ -73,34 +74,26 @@ export function Navbar() {
         >
           <Link
             href="/"
-            className="group flex min-w-0 items-center gap-3 justify-self-start"
+            className="group flex min-w-0 items-center justify-self-start"
             onClick={() => setIsOpen(false)}
           >
-            <span
-              className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-primary text-primary-foreground shadow-soft transition-transform duration-300 group-hover:scale-[1.03]"
-              aria-hidden="true"
-            >
-              <span className="absolute inset-x-0 bottom-0 h-[3px] bg-accent" />
-              <span className="font-display text-[13px] font-bold tracking-[0.08em]">
-                DGD
-              </span>
-            </span>
-            <span className="min-w-0">
-              <span className="block truncate font-display text-[15px] font-semibold leading-tight tracking-tight text-primary sm:text-base">
-                Divine Gospel Delight
-              </span>
-              <span className="hidden text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground sm:block">
-                Foundation
-              </span>
-            </span>
-            <span className="sr-only">{SITE_NAME}</span>
-            {/* <Image
+            <Image
               src="/logo.png"
-              alt="Divine Gospel Delight Foundation"
-              width={150}
-              height={150}
-              className="border"
-            /> */}
+              alt={SITE_NAME}
+              width={536}
+              height={100}
+              priority
+              className="h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02] sm:h-14"
+            />
+            {/* <div className="">
+              <div className="font-serif text-[#011F68]! leading-6 font-bold tracking-wider text-3xl">
+                <h2>DIVINE</h2>
+                <h2>GOSPEL</h2>
+              </div>
+              <p className="text-[10px] tracking-wider font-bold text-accent">
+                DELIGHT FOUNDATION
+              </p>
+            </div> */}
           </Link>
 
           <ul className="hidden items-center gap-0.5 md:flex lg:gap-1">
@@ -293,7 +286,7 @@ export function Navbar() {
       </AnimatePresence>
 
       {/* Spacer so page content clears the fixed floating bar */}
-      <div className="h-[5.25rem] sm:h-[5.5rem]" aria-hidden="true" />
+      <div className="h-[5.75rem] sm:h-24" aria-hidden="true" />
     </>
   );
 }

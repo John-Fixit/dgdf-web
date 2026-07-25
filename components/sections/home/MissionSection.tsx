@@ -15,7 +15,7 @@ export function MissionSection({ headline, mandateQuote }: MissionSectionProps) 
       aria-labelledby="mandate-heading"
     >
       <AnimatedSection className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-        <SectionLabel>Our Mandate</SectionLabel>
+        <SectionLabel>Our Mission</SectionLabel>
         <h2
           id="mandate-heading"
           className="mx-auto mt-3 max-w-3xl font-display text-3xl font-semibold text-primary sm:text-4xl lg:text-5xl"

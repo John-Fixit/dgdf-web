@@ -23,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Contact",
     description:
       content.contact.hero.subtext ||
-      "Contact Divine Gospel Delight Foundation for partnerships, volunteering, prayer requests, or general inquiries.",
+      "Contact Divine Gospel Delight Foundation at divinegospeldelight.ministry@gmail.com for partnerships, volunteering, or general inquiries.",
     path: "/contact",
     keywords: ["contact foundation", "volunteer", "partnership inquiry"],
   });

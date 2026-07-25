@@ -362,7 +362,7 @@ export function DonationForm({
                           setFirstName(event.target.value);
                           clearFieldError("firstName");
                         }}
-                        placeholder="John"
+                        placeholder="First name"
                         autoComplete="given-name"
                         aria-invalid={Boolean(fieldErrors.firstName)}
                         aria-describedby={
@@ -396,7 +396,7 @@ export function DonationForm({
                           setLastName(event.target.value);
                           clearFieldError("lastName");
                         }}
-                        placeholder="Doe"
+                        placeholder="Last name"
                         autoComplete="family-name"
                         aria-invalid={Boolean(fieldErrors.lastName)}
                         aria-describedby={
@@ -432,7 +432,7 @@ export function DonationForm({
                         setEmail(event.target.value);
                         clearFieldError("email");
                       }}
-                      placeholder="john@example.com"
+                      placeholder="you@email.com"
                       autoComplete="email"
                       aria-invalid={Boolean(fieldErrors.email)}
                       aria-describedby={

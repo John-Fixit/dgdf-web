@@ -88,7 +88,7 @@ export function ContactForm({ content, socialLinks }: ContactFormProps) {
                     <FieldInput
                       id="contact-name"
                       label="Full Name"
-                      placeholder="John Doe"
+                      placeholder="Your full name"
                       value={form.name}
                       onChange={(event) => setField("name", event.target.value)}
                       isRequired
@@ -100,7 +100,7 @@ export function ContactForm({ content, socialLinks }: ContactFormProps) {
                       id="contact-email"
                       type="email"
                       label="Email Address"
-                      placeholder="john@example.com"
+                      placeholder="you@email.com"
                       value={form.email}
                       onChange={(event) =>
                         setField("email", event.target.value)

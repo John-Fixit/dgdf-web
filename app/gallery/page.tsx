@@ -22,9 +22,9 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Gallery",
     description:
       content.gallery.hero.body ||
-      "Browse photos from Divine Gospel Delight Foundation outreaches, compassion programs, and community empowerment moments.",
+      "Capturing every act of service — outreach moments with widows, orphans, families, and communities served by Divine Gospel Delight Foundation.",
     path: "/gallery",
-    keywords: ["outreach gallery", "ministry photos", "community events"],
+    keywords: ["outreach gallery", "ministry photos", "community service"],
   });
 }
 

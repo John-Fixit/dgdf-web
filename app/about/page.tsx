@@ -20,8 +20,8 @@ export async function generateMetadata(): Promise<Metadata> {
   return createPageMetadata({
     title: "About Us",
     description:
-      content.about.hero.subtext ||
-      "Discover the story, mandate, vision, and leadership of Divine Gospel Delight Foundation—a faith-driven nonprofit reaching communities with gospel hope.",
+      content.about.story.body ||
+      "Learn the story, mission, and vision of Divine Gospel Delight Foundation — restoring hope and dignity through gospel-centered service in Nigeria.",
     path: "/about",
     keywords: ["about foundation", "ministry leadership", "gospel mandate"],
   });
@@ -48,10 +48,16 @@ export default async function AboutPage() {
 
   const {
     label,
+    headline,
     headlineAccent,
+    headlineSuffix,
     pillarsLabel,
     pillars,
     metrics,
+    missionTitle,
+    missionBody,
+    visionTitle,
+    visionBody,
     journeyLabel,
     timeline,
     ctaHeadline,
@@ -73,27 +79,28 @@ export default async function AboutPage() {
       <AboutHero
         content={{
           label,
-          headline: content.about.hero.headline,
+          headline,
           headlineAccent,
-          headlineSuffix: "",
+          headlineSuffix,
           pillarsLabel,
           pillars,
           intro: content.about.hero.subtext,
         }}
         metrics={metrics}
       />
-      <MissionVisionSection
-        missionTitle={content.about.story.title}
-        missionBody={content.about.story.body}
-        visionTitle={aboutPageContent.visionTitle}
-        visionBody={aboutPageContent.visionBody}
-      />
-      <AboutQuote quote={content.about.mandateQuote.quote} />
       <HistoryTimeline
         label={journeyLabel}
-        headline={content.about.story.title}
+        headline={content.about.story.title || aboutPageContent.journeyHeadline}
+        body={content.about.story.body}
         milestones={timeline}
       />
+      <MissionVisionSection
+        missionTitle={missionTitle}
+        missionBody={missionBody}
+        visionTitle={visionTitle}
+        visionBody={visionBody}
+      />
+      <AboutQuote quote={content.about.mandateQuote.quote} />
       <LeadershipSection
         label={content.about.leadership.subtext}
         headline={content.about.leadership.heading}

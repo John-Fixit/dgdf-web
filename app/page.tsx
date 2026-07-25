@@ -24,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const content = await getSiteContent();
   const description =
     content.home.hero.paragraph ||
-    "Divine Gospel Delight Foundation restores hope and dignity through sustainable health, education, and spiritual guidance across Nigeria.";
+    "Divine Gospel Delight Foundation restores hope and dignity by meeting the needs of the less privileged through humanitarian and empowerment support across Nigeria.";
 
   const metadata = createPageMetadata({
     title: `${SITE_NAME} | ${SITE_TAGLINE}`,
@@ -32,9 +32,9 @@ export async function generateMetadata(): Promise<Metadata> {
     path: "/",
     keywords: [
       "humanitarian foundation Nigeria",
+      "gospel through service",
       "community empowerment",
-      "healthcare outreach",
-      "donate to charity",
+      "restore hope and dignity",
     ],
   });
 
