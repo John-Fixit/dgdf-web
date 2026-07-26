@@ -33,12 +33,12 @@ export function ProgramsSection({ programs }: ProgramsSectionProps) {
               Focused Humanitarian Efforts
             </h2>
           </div>
-          <Link
+          {/* <Link
             href="/about"
             className="text-sm font-semibold tracking-wide text-primary underline decoration-primary/40 underline-offset-8 transition-colors hover:text-accent hover:decoration-accent"
           >
             View All Programs
-          </Link>
+          </Link> */}
         </AnimatedSection>
 
         <ul className="mt-12 grid gap-6 md:grid-cols-3 md:gap-8">

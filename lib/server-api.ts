@@ -15,8 +15,12 @@ import type {
 
 export type { ApiGalleryItem, SiteContentDocument, SiteSettings };
 
-/** Revalidate CMS payloads so SEO HTML stays fresh without rebuilding. */
-const CMS_REVALIDATE_SECONDS = 60;
+/**
+ * Production ISR window for CMS fetches.
+ * Admin updates also trigger on-demand revalidateTag("cms") for near-instant freshness.
+ * In development we always bypass the Data Cache so reloads show live admin edits.
+ */
+const CMS_REVALIDATE_SECONDS = 15;
 
 function getApiBaseUrl(): string {
   return process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5002";
@@ -27,9 +31,15 @@ function getApiBaseUrl(): string {
  */
 async function serverGet<T>(path: string): Promise<T> {
   const url = `${getApiBaseUrl()}${path}`;
+  const bypassCache =
+    process.env.NODE_ENV === "development" ||
+    process.env.CMS_CACHE_MODE === "no-store";
+
   const response = await fetch(url, {
     headers: { Accept: "application/json" },
-    next: { revalidate: CMS_REVALIDATE_SECONDS, tags: ["cms"] },
+    ...(bypassCache
+      ? { cache: "no-store" as const }
+      : { next: { revalidate: CMS_REVALIDATE_SECONDS, tags: ["cms"] } }),
   });
 
   if (!response.ok) {
@@ -78,7 +88,6 @@ export const fetchLeadershipMembers = cache(
     }));
   }
 );
-
 
 /**
  * Fetches global site settings (request-deduped).

@@ -24,9 +24,7 @@ const DEFAULT_IMAGE =
  * Asymmetric vision block with portrait, callout, and value list.
  */
 export function VisionSection({
-  headline,
   callout,
-  calloutBody,
   values,
   imageUrl = DEFAULT_IMAGE,
 }: VisionSectionProps) {
@@ -49,9 +47,6 @@ export function VisionSection({
             </div>
             <aside className="absolute -bottom-10 md:-bottom-8 right-3  md:-right-4 hidde max-w-xs bg-primary p-10 text-white md:block lg:-right-8 rounded-xl">
               <p className="font-display text-2xl leading-snug">{callout}</p>
-              <p className="mt-4 text-sm leading-relaxed text-white/80">
-                {calloutBody}
-              </p>
             </aside>
           </AnimatedSection>
 
@@ -64,7 +59,8 @@ export function VisionSection({
               id="vision-heading"
               className="mt-4 font-display text-3xl font-semibold text-primary sm:text-4xl lg:text-5xl"
             >
-              {headline}
+              A platform where every individual can transition from just
+              existing to fulfilling life purpose.
             </h2>
 
             <ul className="mt-10 space-y-8">
@@ -88,14 +84,6 @@ export function VisionSection({
                 );
               })}
             </ul>
-
-            {/* Mobile callout (desktop uses absolute overlay) */}
-            {/* <aside className="mt-10 bg-primary p-8 text-white md:hidden">
-              <p className="font-display text-2xl leading-snug">{callout}</p>
-              <p className="mt-4 text-sm leading-relaxed text-white/80">
-                {calloutBody}
-              </p>
-            </aside> */}
           </AnimatedSection>
         </div>
       </div>
