@@ -64,14 +64,14 @@ function GalleryCard({ item, index, isInView, onOpen }: GalleryCardProps) {
           <div
             className={cn(
               "relative overflow-hidden rounded-2xl bg-muted shadow-soft",
-              ASPECT_CLASSES[aspect]
+              ASPECT_CLASSES[aspect],
             )}
           >
             <Image
               src={item.imageUrl}
               alt={item.caption}
               fill
-              className="object-contain object-center transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.02] group-focus-visible:scale-[1.02]"
+              className="object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.02] group-focus-visible:scale-[1.02]"
               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
 

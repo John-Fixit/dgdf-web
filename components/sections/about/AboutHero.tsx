@@ -20,7 +20,7 @@ export interface AboutHeroProps {
 }
 
 const GROUNDING_IMAGE =
-  "https://images.unsplash.com/photo-1542810634-71277d95dcbb?w=1920&h=800&fit=crop";
+  "https://res.cloudinary.com/john-fixit/image/upload/v1785057699/dgdf/gallery/vi8jodjbpclmlzgfty8r.png";
 
 /**
  * Editorial About hero: light heritage layout, impact metrics, and grounding image.
