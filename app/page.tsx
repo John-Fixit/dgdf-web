@@ -4,13 +4,13 @@ import {
   HeroSection,
   ImpactStats,
   MissionSection,
-  PartnersSection,
+  // PartnersSection,
   ProgramsSection,
-  TestimonialSection,
+  // TestimonialSection,
   VisionSection,
 } from "@/components/sections/home";
 import {
-  PARTNERS,
+  // PARTNERS,
   PROGRAMS,
   SITE_NAME,
   SITE_TAGLINE,
@@ -18,7 +18,10 @@ import {
 } from "@/lib/constants";
 import { getSiteContent, mapImpactStats } from "@/lib/cms";
 import { createPageMetadata, getWebPageJsonLd } from "@/lib/metadata";
-import { foundationContent, testimonials } from "@/lib/mock-data";
+import {
+  foundationContent,
+  // testimonials
+} from "@/lib/mock-data";
 
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getSiteContent();
@@ -82,12 +85,12 @@ export default async function HomePage() {
         calloutBody={content.home.visionMandateImpact.impactSummary}
         values={VISION_VALUES}
       />
-      <TestimonialSection testimonials={testimonials} />
+      {/* <TestimonialSection testimonials={testimonials} /> */}
       <DonateCtaSection
         headline={content.home.donateCta.headline}
         body={content.home.donateCta.subtext}
       />
-      <PartnersSection partners={PARTNERS} />
+      {/* <PartnersSection partners={PARTNERS} /> */}
     </>
   );
 }

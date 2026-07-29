@@ -72,6 +72,10 @@ function CountUp({
  * Light impact statistics row with count-up animation.
  */
 export function ImpactStats({ stats }: ImpactStatsProps) {
+  const livesImpacted =
+    stats.livesImpacted > 1000
+      ? stats.livesImpacted / 1000
+      : stats.livesImpacted;
   return (
     <section
       className="bg-card py-16 sm:py-24"
@@ -89,9 +93,10 @@ export function ImpactStats({ stats }: ImpactStatsProps) {
       >
         <div className="grid grid-cols-2 md:grid-cols-4">
           <CountUp
-            value={Math.round(stats.livesImpacted / 1000)}
+            value={livesImpacted}
             label="Lives Impacted"
-            asThousands
+            asThousands={stats.livesImpacted > 1000}
+            suffix={stats.livesImpacted > 1000 ? "" : "+"}
             delay={0}
             className="border-b border-r border-border md:border-b-0"
           />

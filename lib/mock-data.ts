@@ -330,7 +330,7 @@ export const donatePageContent: DonatePageContent = {
   transparencyImageAlt:
     "Community members sharing a communal meal during a foundation gathering",
   transparencyStats: [
-    { value: "12k+", label: "Lives Impacted" },
+    { value: "500+", label: "Lives Impacted" },
     { value: "Nigeria", label: "Primary Focus" },
   ],
 };
@@ -363,10 +363,7 @@ export const contactPageContent: ContactPageContent = {
       id: "phone",
       icon: "phone",
       title: "Call Us",
-      lines: [
-        "President: 08037310730",
-        "Secretary: 08033705759",
-      ],
+      lines: ["President: 08037310730", "Secretary: 08033705759"],
     },
     {
       id: "hours",
