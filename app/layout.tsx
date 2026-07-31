@@ -28,7 +28,7 @@ const siteDescription =
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://dgdelightfound.org"
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://dgdelightfound.org",
   ),
   title: {
     default: `${SITE_NAME} | ${SITE_TAGLINE}`,
@@ -39,6 +39,8 @@ export const metadata: Metadata = {
   keywords: [
     SITE_NAME,
     "Divine Gospel Delight",
+    "Delight Foundation",
+    "Divine Gospel",
     "gospel foundation",
     "charity Nigeria",
     "Christian nonprofit Nigeria",

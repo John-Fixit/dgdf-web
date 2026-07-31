@@ -67,7 +67,7 @@ export const aboutPageContent: AboutPageContent = {
       year: "Beginnings",
       title: "Neighborhood Care",
       description:
-        "We began by meeting small needs in the neighborhood — walking with widows, orphans, teenage children, retirees, and others who needed compassion.",
+        "We began by meeting small needs in the neighborhood — working with widows, orphans, teenage children, retirees, and others who needed compassion.",
     },
     {
       id: "mile-family",

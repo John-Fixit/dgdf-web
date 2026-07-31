@@ -44,6 +44,12 @@ export function createPageMetadata({
   return {
     title,
     description,
+    manifest: "/site.webmanifest",
+    icons: {
+      icon: "/favicon.ico",
+      shortcut: "/favicon.ico",
+      apple: "/favicon.ico",
+    },
     keywords: [
       SITE_NAME,
       "Divine Gospel Delight",
@@ -105,7 +111,7 @@ export function createPageMetadata({
  * Pass CMS settings when available so crawlers see live contact/social data.
  */
 export function getOrganizationJsonLd(
-  settings?: SiteSettings
+  settings?: SiteSettings,
 ): Record<string, unknown> {
   const name = settings?.organization.name || SITE_NAME;
   const tagline = settings?.organization.tagline || SITE_TAGLINE;
@@ -139,6 +145,7 @@ export function getOrganizationJsonLd(
       width: 1536,
       height: 1024,
     },
+
     image: absoluteUrl(DEFAULT_OG_IMAGE),
     email,
     telephone: phone,
@@ -174,7 +181,9 @@ export function getOrganizationJsonLd(
 /**
  * Returns JSON-LD WebSite schema (helps sitelinks / brand identity).
  */
-export function getWebsiteJsonLd(settings?: SiteSettings): Record<string, unknown> {
+export function getWebsiteJsonLd(
+  settings?: SiteSettings,
+): Record<string, unknown> {
   const name = settings?.organization.name || SITE_NAME;
   const tagline = settings?.organization.tagline || SITE_TAGLINE;
 
@@ -237,7 +246,7 @@ export function getWebPageJsonLd({
  * Returns BreadcrumbList JSON-LD for nested pages.
  */
 export function getBreadcrumbJsonLd(
-  items: BreadcrumbItem[]
+  items: BreadcrumbItem[],
 ): Record<string, unknown> {
   return {
     "@context": "https://schema.org",

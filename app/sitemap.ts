@@ -3,7 +3,9 @@ import { absoluteUrl } from "@/lib/utils";
 
 type SitemapRoute = {
   path: string;
-  changeFrequency: NonNullable<MetadataRoute.Sitemap[number]["changeFrequency"]>;
+  changeFrequency: NonNullable<
+    MetadataRoute.Sitemap[number]["changeFrequency"]
+  >;
   priority: number;
 };
 
@@ -15,11 +17,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const routes: SitemapRoute[] = [
     { path: "/", changeFrequency: "weekly", priority: 1 },
-    { path: "/donate", changeFrequency: "weekly", priority: 0.9 },
     { path: "/about", changeFrequency: "monthly", priority: 0.8 },
     { path: "/founder", changeFrequency: "monthly", priority: 0.7 },
     { path: "/contact", changeFrequency: "monthly", priority: 0.7 },
     { path: "/gallery", changeFrequency: "weekly", priority: 0.7 },
+    { path: "/donate", changeFrequency: "weekly", priority: 0.9 },
   ];
 
   return routes.map(({ path, changeFrequency, priority }) => ({
