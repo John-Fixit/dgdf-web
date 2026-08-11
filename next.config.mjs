@@ -41,7 +41,7 @@ const nextConfig = {
         ],
       },
       {
-        source: "/icons/:path*",
+        source: "/:path*",
         headers: [
           {
             key: "Cache-Control",
@@ -50,7 +50,7 @@ const nextConfig = {
         ],
       },
       {
-        source: "/images/:path*",
+        source: "/:path*",
         headers: [
           {
             key: "Cache-Control",
