@@ -20,7 +20,7 @@ export type { ApiGalleryItem, SiteContentDocument, SiteSettings };
  * Admin updates also trigger on-demand revalidateTag("cms") for near-instant freshness.
  * In development we always bypass the Data Cache so reloads show live admin edits.
  */
-const CMS_REVALIDATE_SECONDS = 15;
+const CMS_REVALIDATE_SECONDS = 60;
 
 function getApiBaseUrl(): string {
   return process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5002";
