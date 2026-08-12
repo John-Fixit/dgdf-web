@@ -143,7 +143,7 @@ export const leadership: LeadershipMember[] = [
     role: "President / Chairperson",
     bio: "Rev'd Mrs Folake Ojo serves as President and Chairperson of Divine Gospel Delight Foundation. With a heart for gospel-centered service, she guides the foundation’s work of restoring hope and dignity to the less privileged across Nigeria.",
     photo:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=1000&fit=crop",
+      "https://res.cloudinary.com/john-fixit/image/upload/v1785522353/dgdf/leadership/mcq3ewnedcqbuydkyr2p.jpg",
     href: "/founder",
   },
   {
@@ -152,7 +152,7 @@ export const leadership: LeadershipMember[] = [
     role: "Secretary",
     bio: "Bolanle Ojo serves as Secretary of Divine Gospel Delight Foundation. He helps coordinate the foundation’s outreach and administrative work so widows, orphans, families, and communities can be served with care and excellence.",
     photo:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=800&h=1000&fit=crop",
+      "https://res.cloudinary.com/john-fixit/image/upload/v1785522335/dgdf/leadership/dfhkw8bfmcfaybdidf5z.jpg",
     href: "/founder",
   },
 ];
