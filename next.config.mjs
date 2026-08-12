@@ -41,16 +41,8 @@ const nextConfig = {
         ],
       },
       {
-        source: "/:path*",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
-          },
-        ],
-      },
-      {
-        source: "/:path*",
+        // Only fingerprinted static assets — never HTML/RSC pages
+        source: "/_next/static/:path*",
         headers: [
           {
             key: "Cache-Control",

@@ -1,6 +1,3 @@
-"use client";
-
-import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
 export interface PageTransitionProps {
@@ -8,10 +5,9 @@ export interface PageTransitionProps {
 }
 
 /**
- * Route-aware content wrapper. No opacity gating — keeps pages visible
- * even when client bundles fail to load.
+ * Simple content wrapper. Avoids keying by pathname so soft RSC refreshes
+ * do not force a full remount of every page section.
  */
 export function PageTransition({ children }: PageTransitionProps) {
-  const pathname = usePathname();
-  return <div key={pathname}>{children}</div>;
+  return <div>{children}</div>;
 }
