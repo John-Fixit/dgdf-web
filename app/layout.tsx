@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Manrope, Outfit } from "next/font/google";
-import { CmsSoftRefresh } from "@/components/CmsSoftRefresh";
 import { Footer, Navbar } from "@/components/layout";
 import { AppToaster, PageTransition } from "@/components/ui";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_TAGLINE } from "@/lib/constants";
@@ -138,7 +137,6 @@ export default async function RootLayout({
           <main id="main-content">{children}</main>
         </PageTransition>
         <Footer />
-        <CmsSoftRefresh />
         <AppToaster />
       </body>
     </html>
