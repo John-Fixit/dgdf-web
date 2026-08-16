@@ -15,31 +15,20 @@ import type {
 
 export type { ApiGalleryItem, SiteContentDocument, SiteSettings };
 
-/**
- * Production ISR window for CMS fetches.
- * Admin updates also trigger on-demand revalidateTag("cms") for near-instant freshness.
- * In development we always bypass the Data Cache so reloads show live admin edits.
- */
-const CMS_REVALIDATE_SECONDS = 60;
-
 function getApiBaseUrl(): string {
   return process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5002";
 }
 
 /**
- * Server-side JSON GET with Next.js Data Cache (ISR-style revalidation).
+ * Server-side JSON GET, always fetched fresh (no Data Cache) so admin
+ * content edits show up on the next page reload with no extra plumbing.
  */
 async function serverGet<T>(path: string): Promise<T> {
   const url = `${getApiBaseUrl()}${path}`;
-  const bypassCache =
-    process.env.NODE_ENV === "development" ||
-    process.env.CMS_CACHE_MODE === "no-store";
 
   const response = await fetch(url, {
     headers: { Accept: "application/json" },
-    ...(bypassCache
-      ? { cache: "no-store" as const }
-      : { next: { revalidate: CMS_REVALIDATE_SECONDS, tags: ["cms"] } }),
+    cache: "no-store",
   });
 
   if (!response.ok) {
