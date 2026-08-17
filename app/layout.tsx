@@ -6,6 +6,7 @@ import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_TAGLINE } from "@/lib/constants";
 import { getSiteSettings } from "@/lib/cms";
 import { getOrganizationJsonLd, getWebsiteJsonLd } from "@/lib/metadata";
 import { absoluteUrl } from "@/lib/utils";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "@/styles/globals.css";
 
 const display = Outfit({
@@ -138,6 +139,7 @@ export default async function RootLayout({
         </PageTransition>
         <Footer />
         <AppToaster />
+        <GoogleAnalytics gaId="G-HWM4NJQCW0" />
       </body>
     </html>
   );
