@@ -53,6 +53,14 @@ type ApiLeadershipMember = {
   href?: string;
 };
 
+type ApiMilestone = {
+  id: string;
+  year: string;
+  title: string;
+  description: string;
+  sortOrder: number;
+};
+
 /**
  * Fetches the nested CMS content document (request-deduped).
  */
@@ -83,6 +91,13 @@ export const fetchLeadershipMembers = cache(
  */
 export const fetchSiteSettings = cache(async (): Promise<SiteSettings> => {
   return serverGet<SiteSettings>("/settings");
+});
+
+/**
+ * Fetches About page history timeline milestones (request-deduped).
+ */
+export const fetchMilestones = cache(async (): Promise<ApiMilestone[]> => {
+  return serverGet<ApiMilestone[]>("/milestones");
 });
 
 /**
