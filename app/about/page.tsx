@@ -7,7 +7,7 @@ import {
   LeadershipSection,
   MissionVisionSection,
 } from "@/components/sections/about";
-import { getLeadership, getSiteContent } from "@/lib/cms";
+import { getLeadership, getMilestones, getSiteContent } from "@/lib/cms";
 import {
   createPageMetadata,
   getBreadcrumbJsonLd,
@@ -31,9 +31,10 @@ export async function generateMetadata(): Promise<Metadata> {
  * About page with heritage hero, mission, journey, leadership, and CTA.
  */
 export default async function AboutPage() {
-  const [content, leaders] = await Promise.all([
+  const [content, leaders, milestones] = await Promise.all([
     getSiteContent(),
     getLeadership(),
+    getMilestones(),
   ]);
 
   const jsonLd = getWebPageJsonLd({
@@ -59,7 +60,6 @@ export default async function AboutPage() {
     visionTitle,
     visionBody,
     journeyLabel,
-    timeline,
     ctaHeadline,
     ctaBody,
     ctaPrimary,
@@ -92,7 +92,7 @@ export default async function AboutPage() {
         label={journeyLabel}
         headline={content.about.story.title || aboutPageContent.journeyHeadline}
         body={content.about.story.body}
-        milestones={timeline}
+        milestones={milestones}
       />
       <MissionVisionSection
         missionTitle={missionTitle}

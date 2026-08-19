@@ -4,6 +4,7 @@ import type { SiteContentDocument, SiteSettings } from "@/lib/cms-types";
 import {
   fetchGalleryItems,
   fetchLeadershipMembers,
+  fetchMilestones,
   fetchSiteContent,
   fetchSiteSettings,
 } from "@/lib/server-api";
@@ -32,6 +33,7 @@ import type {
   LeadershipMember,
   SocialLink,
   Testimonial,
+  TimelineMilestone,
 } from "@/lib/types";
 
 export type { SiteContentDocument, SiteSettings };
@@ -217,6 +219,25 @@ export async function getLeadership(): Promise<LeadershipMember[]> {
   } catch (err) {
     console.warn("[cms] Falling back to mock leadership:", err);
     return mockLeadership;
+  }
+}
+
+/**
+ * Loads the About page history timeline with mock fallback.
+ */
+export async function getMilestones(): Promise<TimelineMilestone[]> {
+  try {
+    const milestones = await fetchMilestones();
+    if (milestones.length === 0) return aboutPageContent.timeline;
+    return milestones.map((milestone) => ({
+      id: milestone.id,
+      year: milestone.year,
+      title: milestone.title,
+      description: milestone.description,
+    }));
+  } catch (err) {
+    console.warn("[cms] Falling back to mock timeline:", err);
+    return aboutPageContent.timeline;
   }
 }
 
