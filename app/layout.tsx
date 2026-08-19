@@ -139,7 +139,7 @@ export default async function RootLayout({
         </PageTransition>
         <Footer />
         <AppToaster />
-        <GoogleAnalytics gaId="G-HWM4NJQCW0" />
+        <GoogleAnalytics gaId="G-D81ZGD7L0H" />
       </body>
     </html>
   );
